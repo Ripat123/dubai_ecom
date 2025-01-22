@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../dashboard/controllers/dashboard_controller.dart';
 import '../controllers/home_controller.dart';
 import 'package:dubai_ecocm/app/modules/account/views/account_view.dart';
 import 'package:dubai_ecocm/app/modules/cart/views/cart_view.dart';
 import 'package:dubai_ecocm/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:dubai_ecocm/app/modules/order/views/order_view.dart';
-import 'package:dubai_ecocm/app/navController/navigation_controller.dart';
 
 
 class HomeView extends GetView<HomeController> {
@@ -14,24 +12,21 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize NavigationController (consider moving to onInit or main)
-    final NavigationController navigationController = Get.find<NavigationController>();
-    final HomeController homeController = Get.find<HomeController>();
 
     return Scaffold(
       body: Obx(() => IndexedStack(
-        index: navigationController.currentIndex.value,
+        index: controller.currentIndex.value,
         children: [
-          const DashboardView(),
-          const OrderView(),
-          const CartView(),
-          const AccountView(),
+          DashboardView(),
+          OrderView(),
+          CartView(),
+          AccountView(),
         ],
       )),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
         elevation: 5,
-        currentIndex: navigationController.currentIndex.value,
-        onTap: navigationController.changePage,
+        currentIndex: controller.currentIndex.value,
+        onTap: controller.changePage,
         selectedItemColor: Colors.deepPurple,
         type: BottomNavigationBarType.fixed,
         items: const [

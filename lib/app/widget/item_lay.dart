@@ -4,21 +4,34 @@ import 'package:flutter/material.dart';
 class ItemLay extends StatelessWidget{
   final ItemModel model;
 
-  const ItemLay({Key? key,
+  const ItemLay({super.key,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-
-        children: [
-          Image.network(model.imgUrl),
-          Padding(padding: EdgeInsets.all(8),
-          child: Text(model.title),)
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.purple[50],
+            borderRadius: BorderRadius.circular(16),
+          ),
+          padding: const EdgeInsets.all(12),
+          child: Image.asset(
+            model.imgUrl,
+            width: 40,
+            height: 40,
+            fit: BoxFit.contain,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          model.title,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+        ),
+      ],
     );
   }
 
