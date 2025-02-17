@@ -1,3 +1,4 @@
+import 'package:dubai_ecocm/app/routes/app_pages.dart';
 import 'package:dubai_ecocm/app/widget/ItemCard_lay.dart';
 import 'package:dubai_ecocm/app/widget/banner_lay.dart';
 import 'package:dubai_ecocm/app/widget/foodItem_lay.dart';
@@ -52,9 +53,14 @@ class DashboardView extends GetView<DashboardController> {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10, top: 20),
-          child: IconButton.outlined(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border_rounded),
+          child: IconButton.filled(
+            onPressed: () {
+              Get.toNamed(Routes.LOCATION_SELECTION);
+            },
+            icon: const Icon(Icons.favorite_border_rounded,color: Colors.black87,),
+            style: IconButton.styleFrom(
+              backgroundColor: Colors.blueGrey.shade50, // Set your desired background color
+            ),
           ),
         ),
       ],
@@ -65,21 +71,23 @@ class DashboardView extends GetView<DashboardController> {
     return Card(
       margin: const EdgeInsets.all(10),
       elevation: 0,
+      color: Colors.blueGrey.shade50,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: Colors.black12),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.toNamed(Routes.SEARCH);
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            SizedBox(height: 40),
-            Icon(Icons.search_rounded, size: 19, color: Colors.black87),
+            SizedBox(height: 48),
+            Icon(Icons.search_rounded, size: 21, color: Colors.black54),
             SizedBox(width: 5),
             Text('Search your needs',
-                style: TextStyle(fontSize: 13, color: Colors.black87)),
+                style: TextStyle(fontSize: 14, color: Colors.black54)),
           ],
         ),
       ),
@@ -155,7 +163,7 @@ class DashboardView extends GetView<DashboardController> {
       margin: EdgeInsets.only(top: 20),
       width: double.infinity,
       decoration: BoxDecoration(
-          color: Colors.black12,
+          color: Colors.blueGrey.shade50,
           borderRadius: BorderRadius.circular(20)
       ),
       child: Column(

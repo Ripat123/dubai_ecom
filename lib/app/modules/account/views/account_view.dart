@@ -1,3 +1,4 @@
+import 'package:dubai_ecocm/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -27,7 +28,7 @@ class AccountView extends GetView<AccountController> {
             title: Text("Login", style: TextStyle(fontWeight: FontWeight.w500)),
             trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
             onTap: () {
-              // Add action here
+              Get.toNamed(Routes.LOGIN);
             },
           ),
           Divider(),
