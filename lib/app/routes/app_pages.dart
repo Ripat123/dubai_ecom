@@ -16,6 +16,8 @@ import '../modules/location_selection/bindings/location_selection_binding.dart';
 import '../modules/location_selection/views/location_selection_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/market/bindings/market_binding.dart';
+import '../modules/market/views/market_view.dart';
 import '../modules/order/bindings/order_binding.dart';
 import '../modules/order/views/order_view.dart';
 import '../modules/restraunt_view/bindings/restraunt_view_binding.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.FOOD_DETAIL_BOTTOM_SHEET,
       page: () => FoodDetailBottomSheetView(),
       binding: FoodDetailBottomSheetBinding(),
+    ),
+    GetPage(
+      name: _Paths.MARKET,
+      page: () => const MarketView(),
+      binding: MarketBinding(),
     ),
   ];
 }

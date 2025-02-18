@@ -14,6 +14,7 @@ abstract class Routes {
   static const SEARCH = _Paths.SEARCH;
   static const LOCATION_SELECTION = _Paths.LOCATION_SELECTION;
   static const FOOD_DETAIL_BOTTOM_SHEET = _Paths.FOOD_DETAIL_BOTTOM_SHEET;
+  static const MARKET = _Paths.MARKET;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const SEARCH = '/search';
   static const LOCATION_SELECTION = '/location-selection';
   static const FOOD_DETAIL_BOTTOM_SHEET = '/food-detail-bottom-sheet';
+  static const MARKET = '/market';
 }

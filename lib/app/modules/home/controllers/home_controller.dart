@@ -1,7 +1,7 @@
+import 'package:dubai_ecocm/app/modules/market/controllers/market_controller.dart';
 import 'package:get/get.dart';
 
 import '../../account/controllers/account_controller.dart';
-import '../../cart/controllers/cart_controller.dart';
 import '../../dashboard/controllers/dashboard_controller.dart';
 import '../../order/controllers/order_controller.dart';
 
@@ -26,8 +26,8 @@ class HomeController extends GetxController {
         }
         break;
       case 2:
-        if (!Get.isRegistered<CartController>()) {
-          Get.lazyPut<CartController>(() => CartController());
+        if (!Get.isRegistered<MarketController>()) {
+          Get.lazyPut<MarketController>(() => MarketController());
         }
         break;
       case 3:

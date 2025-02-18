@@ -1,8 +1,8 @@
+import 'package:dubai_ecocm/app/modules/market/views/market_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import 'package:dubai_ecocm/app/modules/account/views/account_view.dart';
-import 'package:dubai_ecocm/app/modules/cart/views/cart_view.dart';
 import 'package:dubai_ecocm/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:dubai_ecocm/app/modules/order/views/order_view.dart';
 
@@ -19,7 +19,7 @@ class HomeView extends GetView<HomeController> {
         children: [
           DashboardView(),
           OrderView(),
-          CartView(),
+          MarketView(),
           AccountView(),
         ],
       )),
@@ -42,8 +42,8 @@ class HomeView extends GetView<HomeController> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_basket_rounded),
-            label: 'Cart',
-            tooltip: 'Cart Tab', // Add semantic label
+            label: 'Market',
+            tooltip: 'Market Tab', // Add semantic label
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_rounded),
