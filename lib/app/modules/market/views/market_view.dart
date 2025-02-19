@@ -185,7 +185,7 @@ class MarketView extends GetView<MarketController> {
             return GridView.builder(
               itemCount: controller.productList.length,
               shrinkWrap: true, // Important to avoid infinite height issues
-              physics: NeverScrollableScrollPhysics(), // Avoid nested scrolling
+              physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
