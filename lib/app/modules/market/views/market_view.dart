@@ -177,7 +177,7 @@ class MarketView extends GetView<MarketController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Ramadan My Kitchen 🌙',
+            'Ramadan My Kitchen',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           SizedBox(height: 10),
