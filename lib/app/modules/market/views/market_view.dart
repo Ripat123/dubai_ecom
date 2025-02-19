@@ -1,7 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
+import '../../../widget/item_lay.dart';
+import '../../../widget/productCard.dart';
 import '../controllers/market_controller.dart';
 
 class MarketView extends GetView<MarketController> {
@@ -9,13 +13,10 @@ class MarketView extends GetView<MarketController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Snoonu Market', style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
+        backgroundColor: Colors.white,
+        title: Text('Market', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: Icon(Icons.favorite_border),
@@ -30,7 +31,7 @@ class MarketView extends GetView<MarketController> {
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search in Snoonu Market',
+                  hintText: 'Search in Market',
                   prefixIcon: Icon(Icons.search),
                   filled: true,
                   fillColor: Colors.grey[200],
@@ -52,64 +53,85 @@ class MarketView extends GetView<MarketController> {
   }
 
   Widget _buildCategoryGrid() {
-    List<Map<String, String>> categories = [
-      {'title': 'Heartfelt Gifts', 'icon': 'assets/gift.png'},
-      {'title': 'Electronics', 'icon': 'assets/electronics.png'},
-      {'title': 'Pets', 'icon': 'assets/pets.png'},
-      {'title': 'Home & Garden', 'icon': 'assets/home.png'},
-      {'title': 'Toys, Kids & Baby', 'icon': 'assets/toys.png'},
-      {'title': 'Clothes & Accessories', 'icon': 'assets/clothes.png'},
-      {'title': 'Health & Beauty', 'icon': 'assets/health.png'},
-      {'title': 'More', 'icon': 'assets/more.png'},
-    ];
+    return Obx(() {
+      if (controller.isLoading.value) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (controller.items.isEmpty) {
+        return const Center(child: Text("No Items Available"));
+      } else {
+        return LayoutBuilder(builder: (context, constraints) {
+          // Calculate crossAxisCount based on screen width
+          int crossAxisCount = (constraints.maxWidth ~/ 90).toInt();
+          crossAxisCount = crossAxisCount < 2 ? 2 : crossAxisCount;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.8,
-        ),
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey[200],
-                radius: 30,
-                child: Image.asset(categories[index]['icon']!, height: 40),
+          return SizedBox(
+            height: (controller.items.length / crossAxisCount).ceil() * 120.0,
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(8),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.8
               ),
-              SizedBox(height: 5),
-              Text(
-                categories[index]['title']!,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-              ),
-            ],
+              itemCount: controller.items.length,
+              itemBuilder: (context, index) {
+                final item = controller.items[index];
+
+                return ItemLay(model: item,ontap: () => Get.toNamed(Routes.ITEM_VIEW),);
+              },
+            ),
           );
         },
-      ),
-    );
+        );
+      }
+    });
   }
 
+
   Widget _buildSlider() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Container(
-        height: 150,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-            image: NetworkImage('assets/slider.png'),
-            fit: BoxFit.cover,
+    return Obx(() => Column(
+      children: [
+        CarouselSlider(
+          options: CarouselOptions(
+            height: 150.0,
+            autoPlay: true,
+            enlargeCenterPage: true,
+            viewportFraction: 0.9,
+            onPageChanged: (index, reason) {
+              controller.currentIndex.value = index;
+            },
+          ),
+          items: controller.sliderImages.map((imagePath) {
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(22),
+              child: Image.network(imagePath, fit: BoxFit.cover, width: double.infinity),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            controller.sliderImages.length,
+                (index) => AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              width: controller.currentIndex.value == index ? 20 : 8,
+              height: 8,
+              decoration: BoxDecoration(
+                color: controller.currentIndex.value == index ? Colors.black : Colors.grey,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
           ),
         ),
-      ),
-    );
+      ],
+    ));
   }
 
   Widget _buildTabSelection() {
@@ -154,29 +176,33 @@ class MarketView extends GetView<MarketController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Ramadan My Kitchen 🌙',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-          SizedBox(height: 10),
-          Container(
-            height: 120,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 100,
-                  margin: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey[200],
-                  ),
-                  child: Icon(Icons.kitchen, size: 40),
-                );
-              },
-            ),
+          Text(
+            'Ramadan My Kitchen 🌙',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
+          SizedBox(height: 10),
+          Obx(() {
+            return GridView.builder(
+              itemCount: controller.productList.length,
+              shrinkWrap: true, // Important to avoid infinite height issues
+              physics: NeverScrollableScrollPhysics(), // Avoid nested scrolling
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemBuilder: (context, index) {
+                var product = controller.productList[index];
+                return ProductCard(product: product, index: index);
+              },
+            );
+          }),
         ],
       ),
     );
   }
+
+
+
 }

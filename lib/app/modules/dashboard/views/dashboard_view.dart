@@ -124,7 +124,7 @@ class DashboardView extends GetView<DashboardController> {
               itemBuilder: (context, index) {
                 final item = controller.items[index];
 
-                return ItemLay(model: item);
+                return ItemLay(model: item,ontap: () => Get.toNamed(Routes.ITEM_VIEW),);
               },
             ),
           );

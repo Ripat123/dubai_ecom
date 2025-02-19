@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 
 class ItemLay extends StatelessWidget{
   final ItemModel model;
+  final VoidCallback ontap;
 
   const ItemLay({super.key,
     required this.model,
+    required this.ontap
   });
 
   @override
@@ -15,9 +17,7 @@ class ItemLay extends StatelessWidget{
     return Column(
       children: [
         InkWell(
-          onTap: () {
-            Get.toNamed(Routes.ITEM_VIEW);
-          },
+          onTap: ontap,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.blueGrey.shade50,
